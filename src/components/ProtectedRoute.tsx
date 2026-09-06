@@ -1,10 +1,22 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-export default function ProtectedRoute() {
-  const token = localStorage.getItem("access_token");
+import { useAppSelector } from "../app/hooks";
 
-  if (!token) {
+import type { Role } from "../features/auth/authSlice";
+
+interface Props {
+  allowedRoles?: Role[];
+}
+
+export default function ProtectedRoute({ allowedRoles }: Props) {
+  const { user } = useAppSelector((state) => state.auth);
+
+  if (!user) {
     return <Navigate to="/login" replace />;
+  }
+
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/" replace />;
   }
 
   return <Outlet />;

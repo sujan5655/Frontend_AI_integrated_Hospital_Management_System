@@ -88,6 +88,7 @@ export default function AIChat() {
       <header className="chat-header">
         <div>
           <h1>Hospital AI Assistant</h1>
+          <h2>Chat with the hospital bot</h2>
 
           <span>Online</span>
         </div>
